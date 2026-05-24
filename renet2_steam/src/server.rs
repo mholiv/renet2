@@ -88,7 +88,9 @@ impl SteamServerTransport {
 
     /// Update server connections, and receive packets from the network.
     pub fn update(&mut self, server: &mut RenetServer) {
-        while let Some(event) = self.listen_socket.lock().unwrap().try_receive_event() {
+        let listen_socket = self.listen_socket.get_mut().unwrap();
+
+        while let Some(event) = listen_socket.try_receive_event() {
             match event {
                 ListenSocketEvent::Connected(event) => {
                     if let Some(steam_id) = event.remote().steam_id() {
