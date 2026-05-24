@@ -14,7 +14,7 @@ This crate adds `SteamServerTransport` and `SteamClientTransport` to replace the
 
 ```rust
 // Setup steam client
-let (steam_client, single) = Client::init_app(480).unwrap();
+let steam_client = Client::init_app(480).unwrap();
 steam_client.networking_utils().init_relay_network_access();
 
 // Create renet server
@@ -33,7 +33,7 @@ let mut steam_transport = SteamServerTransport::new(&steam_client, steam_transpo
 loop {
     let delta_time = Duration::from_millis(16);
 
-    single.run_callbacks(); // Update steam callbacks
+    steam_client.run_callbacks(); // Update steam callbacks
    
     server.update(delta_time);
     steam_transport.update(&mut server);
@@ -62,7 +62,7 @@ loop {
 
 ```rust
 // Setup steam client
-let (steam_client, single) = Client::init_app(480).unwrap();
+let steam_client = Client::init_app(480).unwrap();
 steam_client.networking_utils().init_relay_network_access();
 
 // Create renet client
@@ -77,7 +77,7 @@ let mut steam_transport = SteamClientTransport::new(&steam_client, &server_steam
 loop {
     let delta_time = Duration::from_millis(16);
 
-    single.run_callbacks(); // Update steam callbacks
+    steam_client.run_callbacks(); // Update steam callbacks
     client.update(delta_time);
     steam_transport.update(&mut client);
 

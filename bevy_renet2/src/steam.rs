@@ -1,9 +1,9 @@
 pub use renet2_steam::*;
 
+use ::steamworks::SteamError;
 use bevy_app::{prelude::*, AppExit};
 use bevy_ecs::prelude::*;
 use renet2::{RenetClient, RenetServer};
-use steamworks::SteamError;
 
 use crate::prelude::{client_should_update, RenetClientPlugin, RenetReceive, RenetSend, RenetServerPlugin};
 
@@ -39,13 +39,13 @@ impl Plugin for SteamServerPlugin {
 }
 
 impl SteamServerPlugin {
-    pub fn update_system(mut transport: Option<NonSendMut<SteamServerTransport>>, mut server: ResMut<RenetServer>) {
+    pub fn update_system(mut transport: Option<ResMut<SteamServerTransport>>, mut server: ResMut<RenetServer>) {
         if let Some(transport) = transport.as_mut() {
             transport.update(&mut server);
         }
     }
 
-    pub fn send_packets(mut transport: Option<NonSendMut<SteamServerTransport>>, mut server: ResMut<RenetServer>) {
+    pub fn send_packets(mut transport: Option<ResMut<SteamServerTransport>>, mut server: ResMut<RenetServer>) {
         if let Some(transport) = transport.as_mut() {
             transport.send_packets(&mut server);
         }
@@ -53,7 +53,7 @@ impl SteamServerPlugin {
 
     pub fn disconnect_on_exit(
         exit: MessageReader<AppExit>,
-        mut transport: Option<NonSendMut<SteamServerTransport>>,
+        mut transport: Option<ResMut<SteamServerTransport>>,
         mut server: ResMut<RenetServer>,
     ) {
         if let Some(transport) = transport.as_mut() {
