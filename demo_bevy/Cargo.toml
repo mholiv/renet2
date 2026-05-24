@@ -10,7 +10,7 @@ path = "src/bin/server.rs"
 
 [features]
 netcode = ["bevy_renet2/netcode", "bevy_renet2/native_transport"]
-steam = ["bevy_renet2/steam"]
+steam = ["bevy_renet2/steam", "dep:steamworks"]
 
 [dependencies]
 bevy = { version = "0.18", default-features = false, features = [
@@ -31,4 +31,4 @@ bincode = "1.3"
 bevy_egui = "0.39"
 renet2_visualizer = { path = "../renet2_visualizer", features = ["bevy"] }
 fastrand = "2.0"
-steamworks = { version = "0.11", optional = true }
+steamworks = { version = "0.13", optional = true }

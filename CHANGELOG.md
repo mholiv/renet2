@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.15.0 - 05/24/26
+
+- Update Steam transport to `steamworks` 0.13.
+- Update `bevy_renet2` and `demo_bevy` Steam callback setup for the new `steamworks` client API.
+- Migration notes for `renet2_steam` users:
+  - `steamworks::Client` and networking socket types no longer take a `<ClientManager>` or other `Manager` generic.
+  - `Client::init_app()` now returns a `Client` directly; call `client.run_callbacks()` instead of storing and calling `SingleClient`.
+  - Replace `NetConnectionEnd::AppGeneric` with `NetConnectionEnd::App(AppNetConnectionEnd::generic_normal())`.
+  - Update Rust if needed, because `steamworks` 0.13 requires a newer toolchain than 0.11.
+
 ## 0.14.0 - 04/18/26
 
 - Do not discard messages with using unreliable renet2 channels on top of a reliable transport like WebSockets when reliability is required.
